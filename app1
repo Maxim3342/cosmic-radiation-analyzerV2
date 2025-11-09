@@ -1,0 +1,128 @@
+import streamlit as st
+
+# Настройка страницы
+st.set_page_config(
+    page_title="Анализатор радиации в космосе",
+    page_icon="☢️",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
+
+# Кастомный CSS для стилизации
+st.markdown("""
+    <style>
+    .main-header {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: white;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .center-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .stButton button {
+        width: 200px;
+        background-color: #4CAF50;
+        color: white;
+        font-size: 1.2rem;
+        height: 3em;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+    .stButton button:hover {
+        background-color: #45a049;
+        border: 2px solid #2E8B57;
+    }
+    .info-text {
+        font-size: 1.3rem;
+        text-align: center;
+        margin: 2rem;
+        color: white;
+        line-height: 1.5;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    /* Делаем фон стандартным (прозрачным) */
+    .stApp {
+        background: transparent;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Инициализация состояний
+if 'current_page' not in st.session_state:
+    st.session_state.current_page = 'main'
+
+# Функция главного меню
+def show_main_menu():
+    st.markdown('<h1 class="main-header">Анализатор радиации в космосе</h1>', unsafe_allow_html=True)
+    
+    # Контейнер для центрирования кнопок
+    st.markdown('<div class="center-container">', unsafe_allow_html=True)
+    
+    if st.button('🎮 Игра', use_container_width=False):
+        st.session_state.current_page = 'game'
+        st.rerun()
+        
+    if st.button('📚 Теория', use_container_width=False):
+        st.session_state.current_page = 'theory'
+        st.rerun()
+        
+    if st.button('❓ Что за проект?', use_container_width=False):
+        st.session_state.current_page = 'about'
+        st.rerun()
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Функция страницы игры
+def show_game():
+    st.markdown('<p class="info-text">Coming soon...</p>', unsafe_allow_html=True)
+    if st.button('← Назад', key='back_game'):
+        st.session_state.current_page = 'main'
+        st.rerun()
+
+# Функция страницы теории
+def show_theory():
+    st.markdown('<p class="info-text">Тут вы сможете понять проблему радиации и способы защиты от нее</p>', unsafe_allow_html=True)
+    
+    # Ссылка в виде кнопки
+    st.markdown(
+        '<div style="text-align: center; margin: 2rem;">'
+        '<a href="https://www.vokrugsveta.ru/articles/nevidimaya-ugroza-na-puti-k-drugim-planetam-chto-takoe-kosmicheskaya-radiaciya-i-kak-ot-nee-zashititsya-id6255282" target="_blank" style="display: inline-block; padding: 0.7em 2em; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold;">Основная теория</a>'
+        '</div>',
+        unsafe_allow_html=True
+    )
+    
+    if st.button('← Назад', key='back_theory'):
+        st.session_state.current_page = 'main'
+        st.rerun()
+
+# Функция страницы "О проекте"
+def show_about():
+    st.markdown("""
+    <div class="info-text">
+    Планируется познавательская мини-игра, которая поможет понять проблему радиации и как с ней борются космонавты. 
+    Это тема важна, так как за космосом наше будущее
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button('← Назад', key='back_about'):
+        st.session_state.current_page = 'main'
+        st.rerun()
+
+# Основная логика приложения
+if st.session_state.current_page == 'main':
+    show_main_menu()
+elif st.session_state.current_page == 'game':
+    show_game()
+elif st.session_state.current_page == 'theory':
+    show_theory()
+elif st.session_state.current_page == 'about':
+    show_about()
